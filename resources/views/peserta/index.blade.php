@@ -114,7 +114,7 @@
 
                                     {{-- Kolom Status Lulus --}}
                                     <td class="text-center">
-                                        @if ($peserta->status_lulus)
+                                        @if ($peserta->nilai > $peserta->ujian->matpel->kkm)
                                             <span class="badge bg-success">Lulus</span>
                                         @else
                                             <span class="badge bg-danger">Gagal</span>

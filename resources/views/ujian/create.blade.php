@@ -5,7 +5,7 @@
     <h2 class="mt-4">Tambah Ujian Baru</h2>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('ujian.index') }}">Data Ujian</a></li>
+        <li class="breadcrumb-item"><a href="/ujian">Data Ujian</a></li>
         <li class="breadcrumb-item active">Tambah Baru</li>
     </ol>
 
@@ -18,7 +18,6 @@
             <form action="{{ route('ujian.store') }}" method="POST">
                 @csrf
 
-                {{-- Input Nama Ujian --}}
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama Ujian</label>
                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
@@ -28,7 +27,6 @@
                     @enderror
                 </div>
 
-                {{-- Input Mata Pelajaran (Dropdown) --}}
                 <div class="mb-3">
                     <label for="id_matpel" class="form-label">Mata Pelajaran</label>
                     <select class="form-select @error('id_matpel') is-invalid @enderror"
@@ -36,7 +34,7 @@
                         <option value="" disabled selected>-- Pilih Mata Pelajaran --</option>
                         @foreach ($matpels as $matpel)
                             <option value="{{ $matpel->id_matpel }}" {{ old('id_matpel') == $matpel->id_matpel ? 'selected' : '' }}>
-                                {{ $matpel->nama_matpel }} (KKM: {{ $matpel->kkm }})
+                                {{ $matpel->nama_matpel }}
                             </option>
                         @endforeach
                     </select>
@@ -45,7 +43,6 @@
                     @enderror
                 </div>
 
-                {{-- Input Tanggal --}}
                 <div class="mb-3">
                     <label for="tanggal" class="form-label">Tanggal Ujian</label>
                     <input type="datetime-local" class="form-control @error('tanggal') is-invalid @enderror"
@@ -55,8 +52,9 @@
                     @enderror
                 </div>
 
+
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('ujian.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="/ujian" class="btn btn-secondary">Batal</a>
             </form>
 
         </div>

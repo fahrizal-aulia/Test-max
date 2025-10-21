@@ -10,13 +10,12 @@
 
     <div class="card mb-4">
         <div class="card-header">
-            <a href="{{ route('matpel.create') }}" class="btn btn-primary btn-sm">
+            <a href="/matpel/create" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i> Tambah Matpel Baru
             </a>
         </div>
         <div class="card-body">
 
-            {{-- Menampilkan Pesan Sukses --}}
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -34,24 +33,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- Loop data matpel --}}
                     @forelse ($matpels as $matpel)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $matpel->nama_matpel }}</td>
                             <td>{{ $matpel->kkm }}</td>
                             <td>
-                                {{-- Tombol Show (Detail) --}}
-                                <a href="{{ route('matpel.show', $matpel->id_matpel) }}" class="btn btn-info btn-sm">
-                                    <i class="fas fa-eye"></i> Detail
-                                </a>
-
-                                {{-- Tombol Edit --}}
                                 <a href="{{ route('matpel.edit', $matpel->id_matpel) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
 
-                                {{-- Tombol Hapus (DELETE) --}}
                                 <form action="{{ route('matpel.destroy', $matpel->id_matpel) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -69,11 +60,6 @@
                     @endforelse
                 </tbody>
             </table>
-
-            {{-- Link Paginasi --}}
-            <div class="mt-3">
-                {{ $matpels->links() }}
-            </div>
 
         </div>
     </div>

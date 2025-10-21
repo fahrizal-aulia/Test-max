@@ -16,7 +16,6 @@
         </div>
         <div class="card-body">
 
-            {{-- Menampilkan Pesan Sukses --}}
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -24,6 +23,30 @@
                 </div>
             @endif
 
+            <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-filter"></i> Filter Berdasarkan Tanggal
+        </div>
+        <div class="card-body">
+            <form action="{{ route('ujian.index') }}" method="GET">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="tanggal" class="form-label">Pilih Tanggal</label>
+                        <input type="date" class="form-control" id="tanggal" name="tanggal"
+                               value="{{ $tanggalDipilih ?? '' }}">
+                    </div>
+                    <div class="col-md-8 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-search"></i> Filter
+                        </button>
+                        <a href="{{ route('ujian.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Reset
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -31,36 +54,31 @@
                         <th>Nama Ujian</th>
                         <th>Mata Pelajaran</th>
                         <th>Tanggal</th>
+                        <th>Peserta</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- Loop data ujian --}}
                     @forelse ($ujians as $ujian)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $ujian->nama }}</td>
-                            {{-- Tampilkan nama matpel dari relasi --}}
                             <td>{{ $ujian->matpel->nama_matpel }}</td>
-                            {{-- Format tanggal agar mudah dibaca --}}
                             <td>{{ \Carbon\Carbon::parse($ujian->tanggal)->format('d F Y, H:i') }}</td>
+                            <td>{{ $ujian->peserta_count }}</td>
                             <td>
-                                {{-- Tombol Penting: Kelola Peserta & Nilai --}}
                                 <a href="{{ route('peserta.index', $ujian->id_ujian) }}" class="btn btn-success btn-sm">
                                     <i class="fas fa-users-cog"></i> Kelola Peserta
                                 </a>
 
-                                {{-- Tombol Edit --}}
                                 <a href="{{ route('ujian.edit', $ujian->id_ujian) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
 
-                                {{-- Tombol Show (Detail) --}}
                                 <a href="{{ route('ujian.show', $ujian->id_ujian) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-eye"></i> Detail
                                 </a>
 
-                                {{-- Tombol Hapus (DELETE) --}}
                                 <form action="{{ route('ujian.destroy', $ujian->id_ujian) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -79,10 +97,6 @@
                 </tbody>
             </table>
 
-            {{-- Link Paginasi --}}
-            <div class="mt-3">
-                {{ $ujians->links() }}
-            </div>
 
         </div>
     </div>

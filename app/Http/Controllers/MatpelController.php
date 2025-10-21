@@ -14,21 +14,15 @@ class MatpelController extends Controller
      */
     public function index()
     {
-        $matpels = Matpel::latest()->paginate(10);
+        $matpels = Matpel::all();
         return view('matpel.index', ['matpels' => $matpels]);
     }
 
-    /**
-     * Menampilkan form untuk membuat matpel baru.
-     */
     public function create()
     {
         return view('matpel.create');
     }
 
-    /**
-     * Menyimpan matpel baru ke database.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -38,28 +32,18 @@ class MatpelController extends Controller
 
         Matpel::create($validated);
 
-        return redirect()->route('matpel.index')->with('success', 'Mata pelajaran berhasil ditambah.');
+        return redirect("/matpel")->with('success', 'Mata pelajaran berhasil ditambah.');
     }
 
-    /**
-     * Menampilkan detail satu matpel.
-     */
     public function show(Matpel $matpel)
     {
-        return view('matpel.show', ['matpel' => $matpel]);
     }
 
-    /**
-     * Menampilkan form untuk edit matpel.
-     */
     public function edit(Matpel $matpel)
     {
         return view('matpel.edit', ['matpel' => $matpel]);
     }
 
-    /**
-     * Mengupdate data matpel di database.
-     */
     public function update(Request $request, Matpel $matpel)
     {
         $validated = $request->validate([
@@ -69,16 +53,13 @@ class MatpelController extends Controller
 
         $matpel->update($validated);
 
-        return redirect()->route('matpel.index')->with('success', 'Mata pelajaran berhasil diupdate.');
+        return redirect("/matpel")->with('success', 'Mata pelajaran berhasil diupdate.');
     }
 
-    /**
-     * Menghapus matpel dari database.
-     */
     public function destroy(Matpel $matpel)
     {
         $matpel->delete();
 
-        return redirect()->route('matpel.index')->with('success', 'Mata pelajaran berhasil dihapus.');
+        return redirect("/matpel")->with('success', 'Mata pelajaran berhasil dihapus.');
     }
 }

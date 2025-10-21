@@ -16,7 +16,7 @@ class Ujian extends Model
         return $this->belongsTo(Matpel::class, 'id_matpel', 'id_matpel');
     }
 
-    // Relasi: Satu ujian bisa diikuti banyak siswa (via tabel peserta_ujian)
+    // Relasi: Satu ujian bisa diikuti banyak siswa
     public function siswa()
     {
         return $this->belongsToMany(Siswa::class, 'peserta_ujian', 'id_ujian', 'nis');

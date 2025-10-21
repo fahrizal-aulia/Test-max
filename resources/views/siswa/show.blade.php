@@ -5,7 +5,7 @@
     <h2 class="mt-4">Detail Siswa</h2>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('siswa.index') }}">Data Siswa</a></li>
+        <li class="breadcrumb-item"><a href="/siswa">Data Siswa</a></li>
         <li class="breadcrumb-item active">Detail</li>
     </ol>
 
@@ -28,14 +28,6 @@
                     <strong>Alamat:</strong>
                     <p>{{ $siswa->alamat }}</p>
                 </li>
-                <li class="list-group-item">
-                    <strong>Data Dibuat:</strong>
-                    <p>{{ $siswa->created_at->format('d F Y, H:i') }}</p>
-                </li>
-                <li class="list-group-item">
-                    <strong>Data Diupdate:</strong>
-                    <p>{{ $siswa->updated_at->format('d F Y, H:i') }}</p>
-                </li>
             </ul>
 
         </div>
@@ -43,7 +35,7 @@
              <a href="{{ route('siswa.edit', $siswa->nis) }}" class="btn btn-warning">
                 <i class="fas fa-edit"></i> Edit
             </a>
-            <a href="{{ route('siswa.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+            <a href="/siswa" class="btn btn-secondary">Kembali ke Daftar</a>
         </div>
     </div>
 </div>

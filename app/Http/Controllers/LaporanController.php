@@ -59,20 +59,20 @@ class LaporanController extends Controller
     /**
      * 3.c & 3.d (Laporan Kelulusan)
      */
+
     public function statusKelulusan()
     {
-        // Gunakan model PesertaUjian yang sudah kita buat Accessor-nya
+
         $semuaHasil = PesertaUjian::with('siswa', 'ujian.matpel')->get();
 
         $siswaGagalList = [];
-        $nisSiswaGagal = [];
+        $nisLulus = [];
 
         foreach ($semuaHasil as $hasil) {
-            // Panggil accessor $hasil->status_lulus
-            if ($hasil->status_lulus == false) {
 
-                // Pastikan relasi tidak null
-                if ($hasil->siswa && $hasil->ujian && $hasil->ujian->matpel) {
+            if ($hasil->siswa && $hasil->ujian && $hasil->ujian->matpel) {
+
+                if ($hasil->nilai < $hasil->ujian->matpel->kkm) {
                     $siswaGagalList[] = [
                         'nama_siswa' => $hasil->siswa->nama,
                         'nis' => $hasil->siswa->nis,
@@ -81,17 +81,17 @@ class LaporanController extends Controller
                         'nilai' => $hasil->nilai,
                         'kkm' => $hasil->ujian->matpel->kkm,
                     ];
-                    $nisSiswaGagal[$hasil->siswa->nis] = true;
+
+                    $nisLulus[$hasil->siswa->nis] = true;
                 }
+
             }
         }
 
-        // Ambil semua NIS unik siswa yang pernah ikut ujian
         $semuaSiswaNis = $semuaHasil->pluck('nis')->unique();
 
-        // Filter siswa yang NIS-nya TIDAK ADA di $nisSiswaGagal
-        $nisLulusSemua = $semuaSiswaNis->filter(function ($nis) use ($nisSiswaGagal) {
-            return !isset($nisSiswaGagal[$nis]);
+        $nisLulusSemua = $semuaSiswaNis->filter(function ($nis) use ($nisLulus) {
+            return !isset($nisLulus[$nis]);
         });
 
         $jumlahLulusSemua = $nisLulusSemua->count();

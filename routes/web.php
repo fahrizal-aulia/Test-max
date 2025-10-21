@@ -40,23 +40,18 @@ Route::resource('ujian', UjianController::class);
 
 
 Route::prefix('ujian/{ujian}')->name('peserta.')->group(function () {
-    // Menampilkan halaman manajemen peserta
     Route::get('/peserta', [PesertaUjianController::class, 'index'])->name('index');
-    // Menambah peserta ke ujian
     Route::post('/peserta', [PesertaUjianController::class, 'store'])->name('store');
 });
-// Mengupdate nilai (tidak perlu nested)
 Route::put('/peserta/{peserta}/update-nilai', [PesertaUjianController::class, 'updateNilai'])->name('peserta.updateNilai');
-// Menghapus peserta (tidak perlu nested)
 Route::delete('/peserta/{peserta}', [PesertaUjianController::class, 'destroy'])->name('peserta.destroy');
 
 
 // Rute untuk Laporan
-Route::prefix('laporan')->name('laporan.')->group(function () {
-    // 3.a. Laporan Ujian by Tanggal
-    Route::get('/by_tanggal', [LaporanController::class, 'ujianByTanggal'])->name('byTanggal');
-    // 3.b. Laporan Jumlah Peserta
-    Route::get('/jumlah-peserta', [LaporanController::class, 'jumlahPeserta'])->name('jumlahPeserta');
-    // 3.c & 3.d. Laporan Kelulusan
-    Route::get('/kelulusan', [LaporanController::class, 'statusKelulusan'])->name('kelulusan');
+Route::get('/laporan/by_tanggal', [LaporanController::class, 'ujianByTanggal'])->name('byTanggal');
+Route::get('/laporan/jumlah-peserta', [LaporanController::class, 'jumlahPeserta'])->name('jumlahPeserta');
+Route::get('/laporan/kelulusan', [LaporanController::class, 'statusKelulusan'])->name('kelulusan');
+
+route::get("/algo", function() {
+    return view('algo');
 });

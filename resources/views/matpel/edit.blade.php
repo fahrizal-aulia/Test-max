@@ -17,9 +17,8 @@
 
             <form action="{{ route('matpel.update', $matpel->id_matpel) }}" method="POST">
                 @csrf
-                @method('PUT') {{-- Penting untuk update --}}
+                @method('PUT')
 
-                {{-- Input Nama Matpel --}}
                 <div class="mb-3">
                     <label for="nama_matpel" class="form-label">Nama Mata Pelajaran</label>
                     <input type="text" class="form-control @error('nama_matpel') is-invalid @enderror"
@@ -32,7 +31,6 @@
                     @enderror
                 </div>
 
-                {{-- Input KKM --}}
                 <div class="mb-3">
                     <label for="kkm" class="form-label">KKM (Kriteria Ketuntasan Minimal)</label>
                     <input type="number" class="form-control @error('kkm') is-invalid @enderror"

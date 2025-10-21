@@ -35,26 +35,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- Loop data siswa --}}
                     @forelse ($dataSiswa as $siswa)
                         <tr>
-                            {{-- Gunakan loop iteration untuk nomor urut --}}
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $siswa->nis }}</td>
                             <td>{{ $siswa->nama }}</td>
                             <td>{{ $siswa->alamat }}</td>
                             <td>
-                                {{-- Tombol Show (Detail) --}}
                                 <a href="{{ route('siswa.show', $siswa->nis) }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-eye"></i> Detail
                                 </a>
 
-                                {{-- Tombol Edit --}}
                                 <a href="{{ route('siswa.edit', $siswa->nis) }}" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
 
-                                {{-- Tombol Hapus (DELETE) --}}
                                 <form action="{{ route('siswa.destroy', $siswa->nis) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -73,10 +68,6 @@
                 </tbody>
             </table>
 
-            {{-- Link Paginasi --}}
-            <div class="mt-3">
-                {{ $dataSiswa->links() }}
-            </div>
 
         </div>
     </div>

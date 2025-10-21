@@ -37,10 +37,6 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             matapelajaran
                         </a>
-                        <a class="nav-link" href="{{ route('laporan.byTanggal') }}">
-                <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
-                Ujian per Tanggal
-            </a>
 
                     </div>
                 </div>

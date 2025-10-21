@@ -16,39 +16,35 @@ class PesertaUjianController extends Controller
      */
    public function index(Ujian $ujian)
     {
-        // Ambil data ujian beserta peserta dan siswanya
-        $ujian->load('peserta.siswa');
+         $ujian->load('peserta.siswa');
 
-        // Ambil daftar siswa yang BELUM ikut ujian ini
-        $siswaBelumIkut = Siswa::whereDoesntHave('hasilUjian', function ($query) use ($ujian) {
-            $query->where('id_ujian', $ujian->id_ujian);
-        })->get();
+    $idSiswaSudahIkut = PesertaUjian::where('id_ujian', $ujian->id_ujian)
+        ->pluck('nis');
 
-        return view('peserta.index', [
-            'ujian' => $ujian,
-            'siswaBelumIkut' => $siswaBelumIkut
-        ]);
+    $siswaBelumIkut = Siswa::whereNotIn('nis', $idSiswaSudahIkut)->get();
+
+    return view('peserta.index', [
+        'ujian' => $ujian,
+        'siswaBelumIkut' => $siswaBelumIkut
+    ]);
     }
 
-    /**
-     * Menyimpan/menambahkan siswa ke dalam ujian.
-     */
+
     public function store(Request $request, Ujian $ujian)
     {
         $request->validate([
             'nis' => 'required|exists:siswas,nis'
         ]);
 
-        // Cek agar tidak duplikat
-        $existing = PesertaUjian::where('id_ujian', $ujian->id_ujian)
+        $duplikat = PesertaUjian::where('id_ujian', $ujian->id_ujian)
                                 ->where('nis', $request->nis)
                                 ->first();
 
-        if (!$existing) {
+        if (!$duplikat) {
             PesertaUjian::create([
                 'id_ujian' => $ujian->id_ujian,
                 'nis' => $request->nis,
-                'nilai' => 0 // Nilai default
+                'nilai' => 0
             ]);
             return back()->with('success', 'Peserta berhasil ditambahkan.');
         }
